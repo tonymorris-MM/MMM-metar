@@ -28,7 +28,6 @@ Module.register("MMM-Metar", {
     },
     socketNotificationReceived: function(notification, payload) {
         this.results.push(payload);
-        Log.log(this.results);
         this.updateDom();
     }
 });
