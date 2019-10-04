@@ -10,6 +10,8 @@ module.exports = NodeHelper.create({
         }, function(error, response, body) {
             self.sendSocketNotification('MMM_METAR_RESULT', body);
         });
+
+        setTimeout(this.getMetar(), 15000);
     },
     socketNotificationReceived: function(notification, payload) {
         this.getMetar(payload);
