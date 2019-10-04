@@ -1,12 +1,14 @@
 Module.register("MMM-Metar", {
 
     defaults: {
-        icaoList: ['YBAF', 'YBBN', 'YAMB', 'YBCG', 'YBOK','YBNA', 'YSTW'],
-        fontSize: 30
+        icaoList: ['YBAF', 'YBBN', 'YAMB', 'YBCG', 'YBOK','YBNA', 'YSTW']
     },
     start: function() {
         this.results = [];
         this.getResults();
+    },
+    getStyles: function() {
+        return ['MMM-Metar.css'];
     },
     getResults: function() {
         var self = this;
@@ -17,10 +19,11 @@ Module.register("MMM-Metar", {
     },
     getDom: function() {
         var wrapper = document.createElement('div');
+        var self = this;
         this.results.forEach(function(entry) {
             var entryDiv = document.createElement('div');
             entryDiv.innerHTML = entry;
-            entryDiv.setAttribute('font-size', this.config.fontSize +'px');
+            entryDiv.className = "entrydiv";
             wrapper.appendChild(entryDiv);
         });
         return wrapper;
