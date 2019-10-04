@@ -3,13 +3,12 @@ const request = require('request');
 
 module.exports = NodeHelper.create({
     getMetar: function(site) {
+        var self = this;
         request({
             url: site,
             method: 'GET',
         }, function(error, response, body) {
-            // if (!error && response.statuscode == 200) {
-                this.sendSocketNotification('MMM_METAR_RESULT', 'test');
-            // }
+            self.sendSocketNotification('MMM_METAR_RESULT', body);
         });
     },
     socketNotificationReceived: function(notification, payload) {

@@ -1,29 +1,37 @@
 Module.register("MMM-Metar", {
 
     defaults: {
-        icaoList: ['YBAF', 'YBBN', 'YAMB', 'YBCG', 'YBOK','YBNA', 'YSTW']
+        icaoList: ['YBAF', 'YBBN', 'YAMB', 'YBCG', 'YBOK','YBNA', 'YSTW'],
+        fontSize: 30
     },
     start: function() {
-        this.result = null;
-        this.sendSocketNotification('MMM_METAR', 'http://google.com')
+        this.results = [];
+        this.getResults();
+    },
+    getStyles: function() {
+        return ['MMM-Metar.css'];
+    },
+    getResults: function() {
+        var self = this;
+        this.config.icaoList.forEach(function(icao) {
+            var url = 'http://metar.online/metar/' + icao + "/*";
+            self.sendSocketNotification('MMM_METAR', url);
+        });
     },
     getDom: function() {
         var wrapper = document.createElement('div');
-        // this.config.icaoList.forEach(function(icao) {
-        //     var url = "http://metar.online/metar/" + icao + "/1";
-        //     // var entry = document.createElement("div");
-        //     // entry.innerHTML = this.getMetar(url);
-        //     // wrapper.appendChild(entry);
-        //     Log.log(this.getMetar(url));
-        // });
-        if (this.result) {
-            wrapper.innerHTML = this.result;
-        }
-
+        this.results.forEach(function(entry) {
+            var entryDiv = document.createElement('div');
+            entryDiv.innerHTML = entry;
+            entryDiv.className = "entryDiv";
+            entryDiv.setAttribute('font-size', this.config.fontSize +'px');
+            wrapper.appendChild(entryDiv);
+        });
         return wrapper;
     },
     socketNotificationReceived: function(notification, payload) {
-        this.result = payload;
+        this.results.push(payload);
+        Log.log(this.results);
         this.updateDom();
     }
 });
