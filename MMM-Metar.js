@@ -8,9 +8,6 @@ Module.register("MMM-Metar", {
         this.results = [];
         this.getResults();
     },
-    getStyles: function() {
-        return ['MMM-Metar.css'];
-    },
     getResults: function() {
         var self = this;
         this.config.icaoList.forEach(function(icao) {
