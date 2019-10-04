@@ -20,7 +20,6 @@ Module.register("MMM-Metar", {
         this.results.forEach(function(entry) {
             var entryDiv = document.createElement('div');
             entryDiv.innerHTML = entry;
-            entryDiv.className = "entryDiv";
             entryDiv.setAttribute('font-size', this.config.fontSize +'px');
             wrapper.appendChild(entryDiv);
         });
